@@ -3,7 +3,7 @@
 A custom web component that can be used in web applications or websites. It provides a carousel window container that can contain an image, a title and an introduction text message.
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/pd-carousel)
 
-[Demo page (by unpkg.com)](https://unpkg.com/pd-carousel@1.0.0/pd-carousel.html)
+[Demo page (by unpkg.com)](https://unpkg.com/pd-carousel@1.0.1/pd-carousel.html)
 
 ## Getting Started
 

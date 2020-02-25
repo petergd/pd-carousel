@@ -1,6 +1,6 @@
 {
   "name": "pd-carousel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Custom Web Component Images Carousel",
   "main": "pd-carousel.js",
   "scripts": {
@@ -14,7 +14,8 @@
     "Web",
     "Component",
     "image",
-    "Carousel"
+    "Carousel",
+	"responsive"
   ],
   "bugs": {
     "url": "https://github.com/petergd/pd-carousel/issues",
@@ -24,7 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "@webcomponents/webcomponentsjs": "^2.4.1",
-    "pd-indicator": "^1.0.4"
+	"pd-indicator": "^1.0.4"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "^2.4.1",
