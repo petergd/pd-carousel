@@ -1,6 +1,6 @@
 {
   "name": "pd-carousel",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Custom Web Component Images Carousel",
   "main": "pd-carousel.js",
   "scripts": {

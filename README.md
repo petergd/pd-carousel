@@ -90,7 +90,6 @@ Add the custom element tag to your HTML page.
 
 The element's parameters are:
 
- - **carousel-indicator** (string - default `circle`). Set the style of carousel indicators.
  - **id** (string - optional). If the element has an id then the carousel content will be created from `template` elements that have attribute `data-pd-carousel-id` equal to the id of the element. If it is not set then the carousel content will be created from `template` elements that have attribute `data-for="pd-carousel"`.
 
 **Basic Usage**
@@ -121,8 +120,6 @@ For the `carousel` to work the below `template` example has three `images`, thre
 	</div>
 	</template>
 	<pd-carousel id="image-gallery"></pd-carousel>
-
-You can change the element's attributes by using Javascript and pass callbacks, for example.
 
 ## Contributing
 
