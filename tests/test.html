@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>HTML5 Test Page</title>
+		<meta name="description" content="HTML5 Custom Web Element Test Page">
+		<meta name="author" content="Peter Darmis">
+		<style>
+			html, body {
+			  height: 100%;
+			  overflow: hidden;
+			  -webkit-perspective: 37.5rem;
+			  -moz-perspective: 37.5rem;
+			  perspective: 37.5rem;
+			}
+			:host {
+			  display: block;
+			}
+			pd-carousel:not(:defined),
+			pd-indicator:not(:defined) {
+			  display: none;
+			}
+			pd-carousel,
+			pd-carousel:defined {
+			  width: 100vw;
+			  height: 100vh;
+			  position: fixed;
+			  top: 0;
+			}
+			pd-carousel,
+			pd-carousel:defined,
+			pd-indicator,
+			pd-indicator:defined {
+			  display: block;
+			}
+			pd-carousel {
+				background-color:#000;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<template data-for="pd-carousel" data-pd-carousel-id="image-gallery">
+		<style>img { width: 100%; height: 100%; }</style>
+		<img src="https://picsum.photos/1200/900" data-slide="1"/>
+		<img src="https://picsum.photos/1201/900" data-slide="2"/>
+		<img src="https://picsum.photos/1200/901" data-slide="3"/>
+		<div class="title" data-slide="1">Turpis consequat</div>
+		<div class="title" data-slide="2">Fusce eget turpis consequat, cursus ante id, vehicula nisl</div>
+		<div class="title" data-slide="3">Maecenas porta quis nisi sit amet fermentum</div>
+		<div class="introtext" data-slide="1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac facilisis eros. Nullam feugiat ex vel ornare sagittis. Etiam blandit lectus nec dui mollis fermentum. Suspendisse pellentesque eros at risus vehicula porta. Quisque dui tellus, ullamcorper eget diam sit amet, venenatis condimentum odio. Vivamus eget viverra leo. Mauris fringilla metus dolor, porta finibus tortor gravida sed.</div>
+		<div class="introtext" data-slide="2">Suspendisse iaculis, velit vitae vestibulum volutpat, mauris sapien tempor diam, eu pellentesque arcu ex quis neque. Sed nec mauris at purus viverra scelerisque. Donec metus risus, ultrices in gravida vel, porttitor interdum lectus. Aliquam faucibus metus sed laoreet placerat. Praesent efficitur enim dictum, molestie velit vitae, hendrerit magna. Sed et dolor vel lectus blandit tristique. Cras tristique nec sapien quis pellentesque. Nunc nec ullamcorper sapien. Nulla fermentum quis mi id interdum. Quisque gravida ipsum non euismod pellentesque. Aenean placerat nec tortor eget porta.</div>
+		<div class="introtext" data-slide="3">Pellentesque quis ex sem. Donec congue, massa ac ultrices bibendum, dolor justo rutrum arcu, dapibus pharetra magna lorem eget sem. Etiam ex lectus, venenatis nec lectus at, lobortis euismod tortor. Donec nec ipsum eget nisl finibus tempor at vitae augue. Fusce ipsum nibh, elementum non ante nec, eleifend molestie nulla. Aenean vitae pharetra ex. Praesent a quam ut tellus molestie vestibulum. Proin nec hendrerit ante. Aenean aliquam arcu nec dolor lobortis bibendum.</div>
+		<div class="indicators-container">
+			<pd-indicator type="circle" data-slide="1"></pd-indicator>
+			<pd-indicator type="circle" data-slide="2"></pd-indicator>
+			<pd-indicator type="circle" data-slide="3"></pd-indicator>
+		</div>
+		</template>
+		<pd-carousel id="image-gallery" carousel-indicator="circle"></pd-carousel>
+		
+		<script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+		<script type="module" src="node_modules/pd-indicator/pd-indicator.js"></script>
+		<script type="module" src="pd-carousel.js"></script>
+	</body>
+</html>
