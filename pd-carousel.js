@@ -7,7 +7,7 @@ export class pdCarousel extends HTMLElement {
 	this.img = null;
 	this.cTitle = null;
 	this.introText = null;
-	this.queue = [];
+	//this.queue = [];
 	this.wordsLengthTime = 0;
 	this.index = 1;
 	this.images = [];
@@ -16,10 +16,84 @@ export class pdCarousel extends HTMLElement {
 	this.ceiling = 0;
 	this.removalTimeout = null;	
   }
-  init() {  
-	this.prepareCSS();	
-	this.prepareTemplate();	
-	this.showSlide();
+  init() { 
+	let self = this;
+	self.prepareCSS();	
+	self.prepareTemplate();	
+	self.showSlide();
+	//console.log(self.index);
+	self.sRoot.addEventListener("click", (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		if(e.target.hasAttribute('active') && !self.isEmpty(e.target.getAttribute('active'))) {
+		console.log(e.target.hasAttribute('active'),e.target.getAttribute('active'),'clicked');
+			e.target.removeAttribute('active');
+			console.log(e.target.hasAttribute('active'),e.target.getAttribute('active'),'clicked');
+		}
+		self.setIndicatorsInactive();
+		let indicators = self.sRoot.querySelectorAll(".indicators-container pd-indicator[data-slide]");
+
+			indicators.forEach((indicator) => {
+			//console.log(e.target,indicator);				
+				if(e.target == indicator) {				
+					self.index = e.target.dataset.slide;
+					if(!(self.isEmpty(self.img) && self.isEmpty(self.cTitle) && self.isEmpty(self.introtext))) {
+						self.cTitle.classList.replace("slide-left-in","slide-left-out");
+						self.introText.classList.replace("slide-right-in","slide-right-out");
+						setTimeout(() => {
+							self.img.classList.replace("zoom-in","zoom-out");				
+							setTimeout(() => {
+								self.img.classList.remove("zoom-out");
+								self.cTitle.classList.remove("slide-left-out");
+								self.introText.classList.remove("slide-right-out");
+								if(!(self.isEmpty(self.img) && self.isEmpty(self.cTitle) && self.isEmpty(self.introtext))) {
+									self.sRoot.removeChild(self.img);
+									self.sRoot.removeChild(self.cTitle);
+									self.sRoot.removeChild(self.introText);	
+								}
+								clearTimeout(self.removalTimeout);
+								self.showSlide();
+							},700);
+						},700);
+					}
+				}
+			});			
+	});
+	/*this.sRoot.querySelectorAll(".indicators-container pd-indicator[data-slide]").forEach((indicator) => {
+		indicator.addEventListener("click", (e) => {
+			e.preventDefault();	
+			if(e.target.hasAttribute("active") && !this.isEmpty(e.target.getAttribute("active"))) {
+				e.target.removeAttribute("active")
+			}
+			this.setIndicatorsInactive().then((r) => {
+				if(!this.isEmpty(r)) {
+				this.index = e.target.dataset.slide;
+				if(!(this.isEmpty(this.img) && this.isEmpty(this.cTitle) && this.isEmpty(this.introtext))) {
+					this.cTitle.classList.replace("slide-left-in","slide-left-out");
+					this.introText.classList.replace("slide-right-in","slide-right-out");
+					
+					setTimeout(() => {
+						this.img.classList.replace("zoom-in","zoom-out");				
+						setTimeout(() => {
+							this.img.classList.remove("zoom-out");
+							this.cTitle.classList.remove("slide-left-out");
+							this.introText.classList.remove("slide-right-out");
+							if(!(this.isEmpty(this.img) && this.isEmpty(this.cTitle) && this.isEmpty(this.introtext))) {
+								this.sRoot.removeChild(this.img);
+								this.sRoot.removeChild(this.cTitle);
+								this.sRoot.removeChild(this.introText);	
+							}
+							clearTimeout(this.removalTimeout);
+							this.showSlide();
+						},700);
+					},700);
+				}
+				}
+			});
+			//this.sRoot.querySelector(".indicators-container pd-indicator[data-slide=\""+this.index+"\"]").removeAttribute("active");
+			
+		});
+	});
 	this.sRoot.querySelectorAll(".indicators-container pd-indicator[data-slide]").forEach((indicator) => {
 		indicator.addEventListener("click", (e) => {
 			e.preventDefault();	
@@ -30,6 +104,12 @@ export class pdCarousel extends HTMLElement {
 				this.showSlide();
 			});
 		})
+	});*/
+  }
+  setIndicatorsInactive() {
+	let pdIndicators = this.sRoot.querySelectorAll(".indicators-container pd-indicator[data-slide]");
+    pdIndicators.forEach((pdi,index) => {
+		pdi.removeAttribute("active");
 	});
   }
   prepareTemplate() {
@@ -57,7 +137,7 @@ export class pdCarousel extends HTMLElement {
     Style.append(css);
     this.sRoot.appendChild(Style);
   }
-  async removeSlide() {
+/*   async removeSlide() {
 	return await new Promise((resolve, reject) => {
 		if(!(this.isEmpty(this.img) && this.isEmpty(this.cTitle) && this.isEmpty(this.introtext))) {
 			this.cTitle.classList.replace("slide-left-in","slide-left-out");
@@ -78,8 +158,55 @@ export class pdCarousel extends HTMLElement {
 			},700);
 		}
 	});
+  } 
+  active loses state if clicked the same indicator*/
+  showSlide() {	  	
+	//this.setIndicatorsInactive().then((res) => {
+	//if(res) {
+	this.img = this.images.filter(item => item.dataset.slide == this.index)[0];
+	this.img.classList.add("zoom-in");
+		setTimeout(() => {
+			this.cTitle = this.cTitles.filter(item => item.dataset.slide == this.index)[0];
+			this.cTitle.classList.add("slide-left-in");
+			this.introText = this.introTexts.filter(item => item.dataset.slide == this.index)[0];	
+			this.wordsLengthTime = !this.isEmpty(this.introText) ? 1000*parseInt(this.introText.textContent.split(" ").length/1.25) : 30000 ;
+			this.introText.classList.add("slide-right-in");
+			this.sRoot.querySelector(".indicators-container pd-indicator[data-slide=\""+this.index+"\"]").setAttribute("active","true");
+			this.sRoot.appendChild(this.img);
+			this.sRoot.appendChild(this.cTitle);
+			this.sRoot.appendChild(this.introText);	
+			this.removalTimeout = setTimeout(() => {
+				if(!(this.isEmpty(this.img) && this.isEmpty(this.cTitle) && this.isEmpty(this.introtext))) {
+					this.cTitle.classList.replace("slide-left-in","slide-left-out");
+					this.introText.classList.replace("slide-right-in","slide-right-out");
+					setTimeout(() => {
+						this.img.classList.replace("zoom-in","zoom-out");
+						
+						setTimeout(() => {
+							this.img.classList.remove("zoom-out");
+							this.cTitle.classList.remove("slide-left-out");
+							this.introText.classList.remove("slide-right-out");
+							if(!(this.isEmpty(this.img) && this.isEmpty(this.cTitle) && this.isEmpty(this.introtext))) {
+								this.sRoot.removeChild(this.img);
+								this.sRoot.removeChild(this.cTitle);
+								this.sRoot.removeChild(this.introText);	
+							}
+							clearTimeout(this.removalTimeout);
+							this.sRoot.querySelector(".indicators-container pd-indicator[data-slide=\""+this.index+"\"]").removeAttribute("active");
+							this.index++;
+							if(this.index > this.ceiling) {
+								this.index = 1;
+							}
+							this.showSlide();
+						},700);
+					},700);
+				}
+			},this.wordsLengthTime);		
+		},700);	
+	//}
+	//});		
   }
-  async showSlide() {
+  /* async showSlide() {
 	    return await new Promise((resolve, reject) => {
 			this.img = this.images.filter(item => item.dataset.slide == this.index)[0];
 			this.img.classList.add("zoom-in");
@@ -110,7 +237,7 @@ export class pdCarousel extends HTMLElement {
 				this.showSlide();	
 			}
 		});
-  }
+  } */
   isEmpty(value) {
     switch (true) {
       case (value == null || value == undefined):
@@ -121,7 +248,7 @@ export class pdCarousel extends HTMLElement {
         return (Object.keys(value).length === 0 && value.constructor === Object);
       case (typeof value == 'string'):
         return value.length == 0;
-      case (typeof value == 'number'):
+      case (typeof value == 'number' && !isNaN(value)):
         return value == 0;
       case (!value):
         return true;
