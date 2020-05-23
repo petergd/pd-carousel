@@ -1,6 +1,6 @@
 {
   "name": "pd-carousel",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "Custom Web Component Images Carousel",
   "main": "pd-carousel.js",
   "scripts": {
@@ -24,11 +24,10 @@
   "author": "Peter Darmis",
   "license": "MIT",
   "dependencies": {
-    "@webcomponents/webcomponentsjs": "^2.4.1",
-    "pd-indicator": "^1.0.8"
+    "pd-indicator": "^1.1.2"
   },
   "devDependencies": {
-    "@webcomponents/webcomponentsjs": "^2.4.1",
+    "@webcomponents/webcomponentsjs": "^2.4.2",
     "chai": "^4.2.0",
     "jasmine": "^3.5.0",
     "karma": "^4.4.1",
