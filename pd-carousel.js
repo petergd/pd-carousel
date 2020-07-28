@@ -2,7 +2,7 @@ export class pdCarousel extends HTMLElement {
   constructor() {
     super();
     this.sRoot = this.attachShadow({
-      mode: 'closed'
+      mode: 'open'
     });	
 	this.img = null;
 	this.cTitle = null;
@@ -21,12 +21,10 @@ export class pdCarousel extends HTMLElement {
 	self.prepareTemplate();	
 	self.showSlide();
 	self.sRoot.addEventListener("click", (e) => {
-		e.preventDefault();
-		e.stopPropagation();
-		if(e.target.hasAttribute('active') && !self.isEmpty(e.target.getAttribute('active'))) {
-			e.target.removeAttribute('active');
+		if(e.target.hasAttribute('active') && e.target.getAttribute('active') == 'true') {
+			self.setIndicatorsInactive();
 		}
-		self.setIndicatorsInactive();
+		
 		let indicators = self.sRoot.querySelectorAll(".indicators-container pd-indicator[data-slide]");
 			indicators.forEach((indicator) => {
 				if(e.target == indicator) {				
