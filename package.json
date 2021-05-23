@@ -1,6 +1,6 @@
 {
   "name": "pd-carousel",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Custom Web Component Images Carousel",
   "main": "pd-carousel.js",
   "scripts": {
@@ -24,12 +24,12 @@
   "author": "Peter Darmis",
   "license": "MIT",
   "dependencies": {
-    "pd-indicator": "^1.1.7"
+    "pd-indicator": "^1.1.8"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "jasmine": "^3.6.1",
-    "karma": "^4.4.1",
+    "karma": "^6.3.2",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-cli": "^2.0.0",

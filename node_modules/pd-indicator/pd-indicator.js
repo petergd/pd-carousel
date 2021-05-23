@@ -1,12 +1,13 @@
 export class pdIndicator extends HTMLElement {
   static get observedAttributes() {
-    return ['type', 'color', 'active-color', 'active'];
+    return ['type', 'color', 'active-color', 'active', 'forceInactive'];
   }  
   constructor() {
     super();
     this.sRoot = this.attachShadow({
       mode: 'closed'
     });
+	this.forceInactive = (this.getAttribute("forceInactive") == "true");
 	this.active = (this.getAttribute("active") == "true");
     this.indicatorStyles = ['moon', 'yin-yang', 'pointer', 'rectangle', 'circle', 'pacman', 'octastar', 'infinity', 'heart', 'switch', 'donut'];
     this.color = this.checkColor(this.getAttribute("color"));
@@ -47,9 +48,11 @@ export class pdIndicator extends HTMLElement {
       });
     p.classList.add('shadow');
     p.addEventListener('click', (e) => {
-      e.preventDefault();	  
-	  this.active = !this.active;
-	  this.setAttribute("active", !this.isEmpty(this.active) ? "true" : "false" );
+      e.preventDefault();
+	  if(this.isEmpty(this.forceInactive)) {
+		  this.active = !this.active;
+	      this.setAttribute("active", !this.isEmpty(this.active) ? "true" : "false" );
+	  }
     });
 	if(!this.isEmpty(this.active)) {
 		p.click();
@@ -82,6 +85,7 @@ export class pdIndicator extends HTMLElement {
     this.color = this.checkColor(this.getAttribute("color"));
     this.activeColor = this.checkColor(this.getAttribute("active-color"), true);
 	this.active = (this.getAttribute("active") == "true");
+	this.forceInactive = (this.getAttribute("forceInactive") == "true");
     this.init();
   }
   disconnectedCallback() {
@@ -98,6 +102,9 @@ export class pdIndicator extends HTMLElement {
     if (name == "active-color") {
       this.activeColor = this.checkColor(this.getAttribute("active-color"), true);
     }
+	if (name == "forceInactive") {
+	  this.forceInactive = (this.getAttribute("forceInactive") == "true");
+	}
 	if (name == "active") {
       this.active = (this.getAttribute("active") == "true");
 	  if(!this.isEmpty(this.sRoot.querySelector("p"))) {
